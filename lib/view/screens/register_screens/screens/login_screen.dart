@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:top_jobs/controller/admin_controller/admin_register_controller.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
 import 'package:top_jobs/model/sign_model.dart';
+import 'package:top_jobs/view/screens/mian_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/user_or_admin.dart';
-import 'package:top_jobs/view/screens/register_screens/screens/users_screens/forgot_password_user_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/screens/forgot_password_screen.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 import 'package:top_jobs/view/screens/search_screen.dart';
 
@@ -17,8 +19,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final userRegisterController = UserRegisterController();
-  SignModel? loginUser;
+  bool loginUser = false;
   List<SignModel> allUsers = [];
+  List<SignModel> allAdmins = [];
   //GlobalKey:
   final formKey = GlobalKey<FormState>();
 
@@ -47,8 +50,12 @@ class _LoginScreenState extends State<LoginScreen> {
       // Future'dan ma'lumotlarni olish
       List<SignModel> users =
           await userRegisterController.getRegisterData();
+      List<SignModel> admins =
+          await AdminRegisterController().getRegisterData();
       setState(() {
         allUsers = users;
+        allAdmins = admins;
+        print(allAdmins);
         isLoading = false;
       });
     } catch (e) {
@@ -98,12 +105,32 @@ class _LoginScreenState extends State<LoginScreen> {
       }
 
       // Foydalanuvchini topish
-      SignModel? foundUser;
+      bool foundUser = false;
       for (var user in allUsers) {
         if (user.contact == _registerEmailController.text &&
             user.password ==
                 _registerPasswordController.text) {
-          foundUser = user;
+          foundUser = true;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => SearchScreen(),
+            ),
+          );
+          break;
+        }
+      }
+      for (var user in allAdmins) {
+        if (user.contact == _registerEmailController.text &&
+            user.password ==
+                _registerPasswordController.text) {
+          foundUser = true;
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: (context) => MainScreen(),
+            ),
+          );
           break;
         }
       }
@@ -114,7 +141,7 @@ class _LoginScreenState extends State<LoginScreen> {
       });
 
       // Foydalanuvchi topilgan-topilmaganligiga qarab harakat qilish
-      if (loginUser == null && mounted) {
+      if (!loginUser && mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Login yoki parol noto\'g\'ri'),
@@ -122,12 +149,6 @@ class _LoginScreenState extends State<LoginScreen> {
         );
       } else {
         // Foydalanuvchi topildi, asosiy ekranga o'tish
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => SearchScreen(),
-          ),
-        );
       }
     }
   }
@@ -192,8 +213,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         if (value == null ||
                             value.isEmpty) {
                           return "Please enter your email.";
-                        } else if (!value.contains('@')) {
-                          return "Invalid email format.";
                         }
                         return null;
                       },

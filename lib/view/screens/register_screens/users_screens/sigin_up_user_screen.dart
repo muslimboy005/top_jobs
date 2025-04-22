@@ -5,6 +5,7 @@ import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/login_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/users_screens/fil_user_profile_screen.dart';
 
 class SigupUserScreen extends StatefulWidget {
   SigupUserScreen({super.key});
@@ -278,7 +279,7 @@ class _SigupUserScreenState extends State<SigupUserScreen> {
                                   MaterialPageRoute(
                                     builder:
                                         (ctx) =>
-                                            LoginScreen(),
+                                            FilUserProfileScreen(),
                                   ),
                                 );
                               }

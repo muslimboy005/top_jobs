@@ -1,25 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:top_jobs/controller/admin_controller/admin_register_controller.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
-import 'package:top_jobs/view/screens/register_screens/screens/users_screens/forgot_password_user_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/screens/forgot_password_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/login_screen.dart';
-import 'package:top_jobs/view/screens/register_screens/screens/users_screens/successfully_user_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/users_screens/successfully_user_screen.dart';
 
 class CheckYourEmailScreen extends StatefulWidget {
   final String email;
-  const CheckYourEmailScreen({super.key, this.email = ""});
+  final bool isAdmin;
+  const CheckYourEmailScreen({
+    super.key,
+    this.email = "",
+    this.isAdmin = false,
+  });
 
   @override
-  State<CheckYourEmailScreen> createState() => _CheckYourEmailScreenState();
+  State<CheckYourEmailScreen> createState() =>
+      _CheckYourEmailScreenState();
 }
 
-class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
-  final _registerPasswordController = TextEditingController();
-  final _registerConfirmPasswordController = TextEditingController();
+class _CheckYourEmailScreenState
+    extends State<CheckYourEmailScreen> {
+  final _registerPasswordController =
+      TextEditingController();
+  final _registerConfirmPasswordController =
+      TextEditingController();
 
   final userRegisterController = UserRegisterController();
+  final adminRegisterController = AdminRegisterController();
 
   final formKey = GlobalKey<FormState>();
 
@@ -30,13 +41,20 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
     if (formKey.currentState!.validate() &&
         _registerConfirmPasswordController.text ==
             _registerPasswordController.text) {
-      userRegisterController.editRegisterData(
-        email: widget.email,
-        password: _registerPasswordController.text,
-      );
+      widget.isAdmin
+          ? adminRegisterController.editRegisterData(
+            email: widget.email,
+            password: _registerPasswordController.text,
+          )
+          : userRegisterController.editRegisterData(
+            email: widget.email,
+            password: _registerPasswordController.text,
+          );
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => SuccessfullyScreen()),
+        MaterialPageRoute(
+          builder: (context) => SuccessfullyScreen(),
+        ),
       );
     }
   }
@@ -50,7 +68,8 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
       endDrawerEnableOpenDragGesture: false,
       body: Form(
         key: formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
+        autovalidateMode:
+            AutovalidateMode.onUserInteraction,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -60,7 +79,8 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
                 children: [
                   Column(
                     // crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(AppImages.check),
                       SizedBox(height: 15 * h),
@@ -90,14 +110,19 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
                       },
                       icon:
                           isShow
-                              ? Icon(Icons.visibility, color: Color(0xff60778C))
+                              ? Icon(
+                                Icons.visibility,
+                                color: Color(0xff60778C),
+                              )
                               : Icon(
                                 Icons.visibility_off,
                                 color: Color(0xff60778C),
                               ),
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
                     ),
                   ),
                   validator: (value) {
@@ -117,7 +142,8 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
                     FocusScope.of(context).unfocus();
                   },
 
-                  controller: _registerConfirmPasswordController,
+                  controller:
+                      _registerConfirmPasswordController,
                   obscureText: isShow,
                   decoration: InputDecoration(
                     hintText: "Confirm password your email",
@@ -129,14 +155,19 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
                       },
                       icon:
                           isShow
-                              ? Icon(Icons.visibility, color: Color(0xff60778C))
+                              ? Icon(
+                                Icons.visibility,
+                                color: Color(0xff60778C),
+                              )
                               : Icon(
                                 Icons.visibility_off,
                                 color: Color(0xff60778C),
                               ),
                     ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
                     ),
                   ),
                   validator: (value) {
@@ -150,24 +181,32 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(left: 30.0, right: 30, top: 80),
+                padding: const EdgeInsets.only(
+                  left: 30.0,
+                  right: 30,
+                  top: 80,
+                ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     Column(
                       children: [
                         InkWell(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius:
+                              BorderRadius.circular(20),
                           onTap: save,
                           child: Container(
                             width: 320,
                             height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(10),
                               color: Color(0xff130160),
                             ),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
                               children: [
                                 Text(
                                   "Save",
@@ -182,7 +221,8 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
                         ),
                         SizedBox(height: 20 * h),
                         InkWell(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius:
+                              BorderRadius.circular(20),
                           onTap: () {
                             Navigator.pushReplacement(
                               context,
@@ -197,12 +237,18 @@ class _CheckYourEmailScreenState extends State<CheckYourEmailScreen> {
                             width: 320,
                             height: 50,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
+                              borderRadius:
+                                  BorderRadius.circular(10),
                               color: Color(0xffD6CDFE),
                             ),
                             child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [SvgPicture.asset(AppImages.back)],
+                              mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                              children: [
+                                SvgPicture.asset(
+                                  AppImages.back,
+                                ),
+                              ],
                             ),
                           ),
                         ),

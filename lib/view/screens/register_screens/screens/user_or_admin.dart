@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:top_jobs/view/screens/register_screens/screens/admin_screens/sign_up_admin_screen.dart';
-import 'package:top_jobs/view/screens/register_screens/screens/users_screens/sigin_up_user_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/admin_screens/sign_up_admin_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/users_screens/sigin_up_user_screen.dart';
 
 class UserOrAdmin extends StatelessWidget {
   const UserOrAdmin({super.key});

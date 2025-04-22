@@ -4,6 +4,7 @@ import 'package:top_jobs/controller/admin_controller/admin_register_controller.d
 import 'package:top_jobs/controller/all_users_and_admins/all_users_and_admins_controller.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
+import 'package:top_jobs/view/screens/register_screens/admin_screens/fill_admin_profile_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/login_screen.dart';
 
 class SignUpAdminScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _SigupUserScreenState
     isLodaing = true;
     AllUsersAndAdminsController().getData().then((value) {
       members = value;
+      print(value);
       isLodaing = false;
       setState(() {});
     });
@@ -261,7 +263,7 @@ class _SigupUserScreenState
                           InkWell(
                             borderRadius:
                                 BorderRadius.circular(20),
-                            onTap: () async{
+                            onTap: () async {
                               if (formKey.currentState!
                                   .validate()) {
                                 widget
@@ -274,13 +276,22 @@ class _SigupUserScreenState
                                           _registerPasswordController
                                               .text,
                                     );
-                                    await widget.adminRegisterController.saveRegisterData(email: _registerEmailController.text, password: _registerPasswordController.text);
+                                await widget
+                                    .adminRegisterController
+                                    .saveRegisterData(
+                                      email:
+                                          _registerEmailController
+                                              .text,
+                                      password:
+                                          _registerPasswordController
+                                              .text,
+                                    );
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                     builder:
                                         (ctx) =>
-                                            LoginScreen(),
+                                            FillAdminProfileScreen(),
                                   ),
                                 );
                               }

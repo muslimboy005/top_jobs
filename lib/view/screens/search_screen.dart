@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:top_jobs/controller/all_job_controller/all_jobs_controller.dart';
 import 'package:top_jobs/model/admins/job_model.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
@@ -7,8 +8,7 @@ import 'package:top_jobs/view/widget/containers_widget.dart';
 import 'package:top_jobs/view/widget/designer_info.dart';
 
 class SearchScreen extends StatefulWidget {
-  
-   SearchScreen({super.key});
+  SearchScreen({super.key});
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
@@ -19,9 +19,11 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    
+    AllJobsController().getData().then((value) {
+      jobs = value;
+      setState(() {});
+    });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -38,32 +40,46 @@ class _SearchScreenState extends State<SearchScreen> {
               color: Color(0xff0D0140),
             ),
             child: Padding(
-              padding: const EdgeInsets.only(left: 20.0, top: 20, right: 20),
+              padding: const EdgeInsets.only(
+                left: 20.0,
+                top: 20,
+                right: 20,
+              ),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment:
+                    CrossAxisAlignment.start,
                 children: [
                   IconButton(
                     onPressed: () {},
                     icon: IconButton(
                       onPressed: () {},
-                      icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                      icon: Icon(
+                        Icons.arrow_back_ios,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
                     ),
                     child: TextFormField(
                       decoration: InputDecoration(
                         hintText: "Search",
                         prefixIcon: IconButton(
                           onPressed: () {},
-                          icon: Icon(Icons.search, color: Color(0xffAAA6B9)),
+                          icon: Icon(
+                            Icons.search,
+                            color: Color(0xffAAA6B9),
+                          ),
                         ),
 
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                              BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -72,7 +88,9 @@ class _SearchScreenState extends State<SearchScreen> {
                   Container(
                     decoration: BoxDecoration(
                       color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
                     ),
                     child: TextFormField(
                       decoration: InputDecoration(
@@ -83,7 +101,8 @@ class _SearchScreenState extends State<SearchScreen> {
                           color: Color(0xffFF9228),
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                              BorderRadius.circular(10),
                         ),
                       ),
                     ),
@@ -94,7 +113,11 @@ class _SearchScreenState extends State<SearchScreen> {
           ),
           SizedBox(height: 20),
           Padding(
-            padding: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+              bottom: 20,
+            ),
             child: SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
@@ -104,15 +127,24 @@ class _SearchScreenState extends State<SearchScreen> {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(
+                        10,
+                      ),
                       color: Color(0xff130160),
                     ),
                     child: InkWell(
                       onTap: () {},
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(
+                        20,
+                      ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [SvgPicture.asset(AppImages.icon_filter)],
+                        mainAxisAlignment:
+                            MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                            AppImages.icon_filter,
+                          ),
+                        ],
                       ),
                     ),
                   ),
@@ -120,17 +152,26 @@ class _SearchScreenState extends State<SearchScreen> {
                     nextPage: SearchScreen(),
                     title: "Senior designer",
                   ),
-                  ContainersWidget(nextPage: SearchScreen(), title: "Designer"),
+                  ContainersWidget(
+                    nextPage: SearchScreen(),
+                    title: "Designer",
+                  ),
                   ContainersWidget(
                     nextPage: SearchScreen(),
                     title: "Senior designer",
                   ),
-                  ContainersWidget(nextPage: SearchScreen(), title: "Designer"),
+                  ContainersWidget(
+                    nextPage: SearchScreen(),
+                    title: "Designer",
+                  ),
                   ContainersWidget(
                     nextPage: SearchScreen(),
                     title: "Senior designer",
                   ),
-                  ContainersWidget(nextPage: SearchScreen(), title: "Designer"),
+                  ContainersWidget(
+                    nextPage: SearchScreen(),
+                    title: "Designer",
+                  ),
                 ],
               ),
             ),
@@ -142,36 +183,17 @@ class _SearchScreenState extends State<SearchScreen> {
                 return Column(
                   spacing: 15,
                   children: [
-                    DesignerInfo(
-                      date: "25 minute ago",
-                      icon: AppImages.google_1,
-                      money: "15K/Mo",
-                      subTitle: "Google inc California, USA",
-                      title1: "Design",
-                      title2: "Full time",
-                      title3: "Senior designer",
-                      title: "UI/UX Designer",
-                    ),
-                    DesignerInfo(
-                      date: "25 minute ago",
-                      icon: AppImages.google_1,
-                      money: "15K/Mo",
-                      subTitle: "Google inc California, USA",
-                      title1: "Design",
-                      title2: "Full time",
-                      title3: "Senior designer",
-                      title: "UI/UX Designer",
-                    ),
-                    DesignerInfo(
-                      date: "25 minute ago",
-                      icon: AppImages.google_1,
-                      money: "15K/Mo",
-                      subTitle: "Google inc California, USA",
-                      title1: "Design",
-                      title2: "Full time",
-                      title3: "Senior designer",
-                      title: "UI/UX Designer",
-                    ),
+                    for (var i in jobs)
+                      DesignerInfo(
+                        date:
+                            """${DateTime.now().difference(i.time).inDays != 0 ? DateTime.now().difference(i.time).inDays : DateTime.now().difference(i.time).inHours} ${DateTime.now().difference(i.time).inDays != 0 ? "days ago" : "hours ago"}""",
+                        image: i.companyImage,
+                        money: i.salary,
+                        subTitle: "${i.shortLocation} ",
+                        title1: i.jobTile,
+                        title2: i.jobInfo,
+                        title: i.jobName,
+                      ),
                   ],
                 );
               },

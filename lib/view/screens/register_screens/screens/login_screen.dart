@@ -3,10 +3,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
 import 'package:top_jobs/model/sign_model.dart';
-import 'package:top_jobs/view/screens/all_jobs_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/user_or_admin.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/users_screens/forgot_password_user_screen.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
+import 'package:top_jobs/view/screens/search_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -125,7 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => AllJobsScreen(),
+            builder: (context) => SearchScreen(),
           ),
         );
       }

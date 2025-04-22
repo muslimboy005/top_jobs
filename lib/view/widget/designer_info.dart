@@ -1,27 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 import 'package:top_jobs/view/widget/containers_widget.dart';
 
 class DesignerInfo extends StatefulWidget {
-  final icon;
+  final String image;
   final String title;
   final String subTitle;
   final String title1;
-  final String title2;
-  final String title3;
   final String date;
   final String money;
+  final String title2;
 
   DesignerInfo({
     super.key,
     required this.date,
-    required this.icon,
+    required this.image,
     required this.money,
     required this.subTitle,
     required this.title1,
     required this.title2,
-    required this.title3,
     required this.title,
   });
 
@@ -54,7 +51,7 @@ class _DesignerInfoState extends State<DesignerInfo> {
                 CircleAvatar(
                   radius: 35,
                   backgroundColor: Colors.black.withOpacity(0.1),
-                  child: Center(child: SvgPicture.asset(widget.icon)),
+                  child: Center(child: Image.network(widget.image,)),
                 ),
                 IconButton(
                   onPressed: () {},
@@ -82,7 +79,6 @@ class _DesignerInfoState extends State<DesignerInfo> {
                 children: [
                   ContainersWidget(title: "  ${widget.title1}  "),
                   ContainersWidget(title: widget.title2),
-                  ContainersWidget(title: widget.title3),
                 ],
               ),
             ),

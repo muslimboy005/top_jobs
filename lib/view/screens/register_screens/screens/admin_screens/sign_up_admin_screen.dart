@@ -254,14 +254,14 @@ class _SigupUserScreenState
                           ],
                         ),
                       ),
-                      SizedBox(height: 70 * h),
+                      SizedBox(height: 50 * h),
                       Column(
                         spacing: 5,
                         children: [
                           InkWell(
                             borderRadius:
                                 BorderRadius.circular(20),
-                            onTap: () {
+                            onTap: () async{
                               if (formKey.currentState!
                                   .validate()) {
                                 widget
@@ -274,6 +274,7 @@ class _SigupUserScreenState
                                           _registerPasswordController
                                               .text,
                                     );
+                                    await widget.adminRegisterController.saveRegisterData(email: _registerEmailController.text, password: _registerPasswordController.text);
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

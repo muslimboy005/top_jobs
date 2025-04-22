@@ -42,16 +42,39 @@ class UserRegisterDatasource {
     );
   }
 
-  Future<void> editPasword({
+  Future<void> editPasswordByContact({
     required String contact,
-    required String password,
+    required String newPassword,
   }) async {
-    final uri = Uri.parse(
-      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/sign.json",
-    );
-    http.patch(
-      uri,
-      body: jsonEncode({"password": password}),
-    );
+    try {
+      // 1. Avval barcha foydalanuvchilarni olish
+      List<SignModel> allUsers = await getData();
+
+      // 2. Kontakt bo'yicha foydalanuvchini qidirish
+      String? userId;
+      for (var user in allUsers) {
+        if (user.contact == contact) {
+          userId = user.id;
+          break;
+        }
+      }
+
+      // 3. Agar foydalanuvchi topilmasa, false qaytarish
+      if (userId == null) {
+        return;
+      }
+
+      // 4. Foydalanuvchi topilgan bo'lsa, parolni o'zgartirish
+      final uri = Uri.parse(
+        "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$userId/sign.json",
+      );
+
+      await http.patch(
+        uri,
+        body: jsonEncode({"password": newPassword}),
+      );
+    } catch (e) {
+      return;
+    }
   }
 }

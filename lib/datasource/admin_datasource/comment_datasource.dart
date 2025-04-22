@@ -3,12 +3,12 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:top_jobs/model/admins/job_model.dart';
 
-class AdminJobDatacource {
+class CommentDatasource {
   final String contact;
   final String companyId;
   final String jobId;
 
-  AdminJobDatacource({
+  CommentDatasource({
     required this.contact,
     required this.companyId,
     required this.jobId,
@@ -38,17 +38,17 @@ class AdminJobDatacource {
 
   Future<void> editData({
     required String id,
-    required JobModel jobModel,
+    required String soz,
   }) async {
     final url = Uri.parse(
-      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$contact/jobs/$jobId/comment/$id.json",
+      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$companyId/jobs/$jobId/comment/$contact.json",
     );
-    await http.put(url, body: jobModel.toJson());
+    await http.patch(url, body: jsonEncode({"coment":soz}));
   }
 
   Future<void> delete({required String id}) async {
     final url = Uri.parse(
-      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$contact/jobs/$jobId/comment/$id.json",
+      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$companyId/jobs/$jobId/comment/$id.json",
     );
     await http.delete(url);
   }

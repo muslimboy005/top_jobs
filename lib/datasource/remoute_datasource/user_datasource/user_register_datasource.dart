@@ -23,7 +23,7 @@ class UserRegisterDatasource {
     return usersSign;
   }
 
-  Future<void> setData({
+  Future<String> setData({
     required String contact,
     required String password,
   }) async {
@@ -36,10 +36,13 @@ class UserRegisterDatasource {
       password: password,
     );
 
-    await http.post(
+    final response = await http.post(
       uri,
       body: jsonEncode(usersModel.models()),
     );
+    final responseData = json.decode(response.body);
+    final generatedId = responseData['name'];
+    return generatedId;
   }
 
   Future<void> editPasswordByContact({

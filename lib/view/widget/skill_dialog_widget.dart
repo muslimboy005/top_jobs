@@ -4,10 +4,12 @@ class SkillDialogWidget extends StatefulWidget {
   const SkillDialogWidget({super.key});
 
   @override
-  State<SkillDialogWidget> createState() => _SkillDialogWidgetState();
+  State<SkillDialogWidget> createState() =>
+      _SkillDialogWidgetState();
 }
 
-class _SkillDialogWidgetState extends State<SkillDialogWidget> {
+class _SkillDialogWidgetState
+    extends State<SkillDialogWidget> {
   final formKey = GlobalKey<FormState>();
 
   @override
@@ -15,7 +17,7 @@ class _SkillDialogWidgetState extends State<SkillDialogWidget> {
     return Form(
       key: formKey,
       child: AlertDialog(
-        title: Text("Language"),
+        title: Text("Your Skills"),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -54,7 +56,8 @@ class _SkillDialogWidgetState extends State<SkillDialogWidget> {
             ),
             SizedBox(height: 30),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
                   onPressed: () {

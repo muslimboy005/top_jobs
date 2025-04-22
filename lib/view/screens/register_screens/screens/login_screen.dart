@@ -3,9 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
 import 'package:top_jobs/model/sign_model.dart';
-import 'package:top_jobs/view/screens/mian_screen.dart';
+import 'package:top_jobs/view/screens/all_jobs_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/screens/user_or_admin.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/users_screens/forgot_password_user_screen.dart';
-import 'package:top_jobs/view/screens/register_screens/screens/users_screens/sigin_up_user_screen.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -24,7 +24,8 @@ class _LoginScreenState extends State<LoginScreen> {
 
   //TextControllers:
   final _registerEmailController = TextEditingController();
-  final _registerPasswordController = TextEditingController();
+  final _registerPasswordController =
+      TextEditingController();
 
   //Variables:
   bool isTrue = false;
@@ -44,19 +45,23 @@ class _LoginScreenState extends State<LoginScreen> {
 
     try {
       // Future'dan ma'lumotlarni olish
-      List<SignModel> users = await userRegisterController.getRegisterData();
+      List<SignModel> users =
+          await userRegisterController.getRegisterData();
       setState(() {
         allUsers = users;
         isLoading = false;
       });
-
     } catch (e) {
       setState(() {
         isLoading = false;
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Ma\'lumotlarni yuklashda xatolik: $e')),
+          SnackBar(
+            content: Text(
+              'Ma\'lumotlarni yuklashda xatolik: $e',
+            ),
+          ),
         );
       }
     }
@@ -72,14 +77,20 @@ class _LoginScreenState extends State<LoginScreen> {
       // Agar ma'lumotlar yuklanmagan bo'lsa, yuklash
       if (allUsers.isEmpty) {
         try {
-          allUsers = await userRegisterController.getRegisterData();
+          allUsers =
+              await userRegisterController
+                  .getRegisterData();
         } catch (e) {
           setState(() {
             isLoading = false;
           });
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text('Ma\'lumotlarni yuklashda xatolik: $e')),
+              SnackBar(
+                content: Text(
+                  'Ma\'lumotlarni yuklashda xatolik: $e',
+                ),
+              ),
             );
           }
           return; // Xatolik bo'lsa, funksiyadan chiqish
@@ -90,7 +101,8 @@ class _LoginScreenState extends State<LoginScreen> {
       SignModel? foundUser;
       for (var user in allUsers) {
         if (user.contact == _registerEmailController.text &&
-            user.password == _registerPasswordController.text) {
+            user.password ==
+                _registerPasswordController.text) {
           foundUser = user;
           break;
         }
@@ -103,14 +115,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
       // Foydalanuvchi topilgan-topilmaganligiga qarab harakat qilish
       if (loginUser == null && mounted) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(SnackBar(content: Text('Login yoki parol noto\'g\'ri')));
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Login yoki parol noto\'g\'ri'),
+          ),
+        );
       } else {
         // Foydalanuvchi topildi, asosiy ekranga o'tish
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => MainScreen()),
+          MaterialPageRoute(
+            builder: (context) => AllJobsScreen(),
+          ),
         );
       }
     }
@@ -125,7 +141,8 @@ class _LoginScreenState extends State<LoginScreen> {
       endDrawerEnableOpenDragGesture: false,
       body: SingleChildScrollView(
         child: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode:
+              AutovalidateMode.onUserInteraction,
           key: formKey,
           child: Column(
             children: [
@@ -134,9 +151,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment:
+                        MainAxisAlignment.center,
                     children: [
-                      SvgPicture.asset(AppImages.welcomeBack),
+                      SvgPicture.asset(
+                        AppImages.welcomeBack,
+                      ),
                       SizedBox(height: 15 * h),
                       SvgPicture.asset(AppImages.lorem),
                     ],
@@ -145,9 +165,14 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
 
               Padding(
-                padding: const EdgeInsets.only(left: 30.0, right: 30, top: 70),
+                padding: const EdgeInsets.only(
+                  left: 30.0,
+                  right: 30,
+                  top: 70,
+                ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment:
+                      CrossAxisAlignment.start,
                   children: [
                     SvgPicture.asset(AppImages.email),
                     SizedBox(height: 10 * h),
@@ -159,11 +184,13 @@ class _LoginScreenState extends State<LoginScreen> {
                       decoration: InputDecoration(
                         hintText: "Enter your email",
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                              BorderRadius.circular(10),
                         ),
                       ),
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
+                        if (value == null ||
+                            value.isEmpty) {
                           return "Please enter your email.";
                         } else if (!value.contains('@')) {
                           return "Invalid email format.";
@@ -179,7 +206,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         FocusScope.of(context).unfocus();
                       },
 
-                      controller: _registerPasswordController,
+                      controller:
+                          _registerPasswordController,
                       obscureText: isShow,
                       decoration: InputDecoration(
                         hintText: "Password your email",
@@ -193,19 +221,25 @@ class _LoginScreenState extends State<LoginScreen> {
                               isShow
                                   ? Icon(
                                     Icons.visibility,
-                                    color: Color(0xff60778C),
+                                    color: Color(
+                                      0xff60778C,
+                                    ),
                                   )
                                   : Icon(
                                     Icons.visibility_off,
-                                    color: Color(0xff60778C),
+                                    color: Color(
+                                      0xff60778C,
+                                    ),
                                   ),
                         ),
                         border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10),
+                          borderRadius:
+                              BorderRadius.circular(10),
                         ),
                       ),
                       validator: (value) {
-                        if (value == null || value.isEmpty) {
+                        if (value == null ||
+                            value.isEmpty) {
                           return "Please enter your password.";
                         } else if (value.length < 6) {
                           return "Password must be at least 6 characters.";
@@ -214,7 +248,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       },
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment:
+                          MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
@@ -227,7 +262,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               },
                             ),
                             SizedBox(width: w * 15),
-                            SvgPicture.asset(AppImages.rememberMe),
+                            SvgPicture.asset(
+                              AppImages.rememberMe,
+                            ),
                           ],
                         ),
                         GestureDetector(
@@ -241,7 +278,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                             );
                           },
-                          child: SvgPicture.asset(AppImages.forgotPassword),
+                          child: SvgPicture.asset(
+                            AppImages.forgotPassword,
+                          ),
                         ),
                       ],
                     ),
@@ -258,12 +297,17 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 270,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
                         color: Color(0xff130160),
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [Image.asset(AppImages.login)],
+                        mainAxisAlignment:
+                            MainAxisAlignment.center,
+                        children: [
+                          Image.asset(AppImages.login),
+                        ],
                       ),
                     ),
                   ),
@@ -275,7 +319,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return SiginUpScreen();
+                            return UserOrAdmin();
                           },
                         ),
                       );
@@ -284,18 +328,24 @@ class _LoginScreenState extends State<LoginScreen> {
                       width: 270,
                       height: 50,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
                         color: Color(0xffD6CDFE),
                       ),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        mainAxisAlignment:
+                            MainAxisAlignment.center,
                         children: [
                           Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                            mainAxisAlignment:
+                                MainAxisAlignment.center,
                             children: [
                               Image.asset(AppImages.google),
                               SizedBox(width: 10 * h),
-                              SvgPicture.asset(AppImages.signInWithGoogle),
+                              SvgPicture.asset(
+                                AppImages.signInWithGoogle,
+                              ),
                             ],
                           ),
                         ],
@@ -309,12 +359,14 @@ class _LoginScreenState extends State<LoginScreen> {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return SiginUpScreen();
+                            return UserOrAdmin();
                           },
                         ),
                       );
                     },
-                    child: SvgPicture.asset(AppImages.youDontHave),
+                    child: SvgPicture.asset(
+                      AppImages.youDontHave,
+                    ),
                   ),
                 ],
               ),

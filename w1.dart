@@ -1,7 +1,13 @@
-import 'package:top_jobs/datasource/admin_datasource/comment_datasource.dart';
+import 'package:top_jobs/datasource/remoute_datasource/admin_datasource/comment_datasource.dart';
+import 'package:top_jobs/datasource/remoute_datasource/user_datasource/user_register_datasource.dart';
 
 void main(List<String> args) {
-  print("main ishladi");
-  CommentDatasource(companyId: "admin1",jobId: "job1",contact: "user1").editData(id: "user1", soz: "salom akobir");
-  
+  UserRegisterDatasource()
+      .setData(
+        contact: "vali@gmail.com",
+        password: "123456",
+      )
+      .then((value) {
+        print(value);
+      });
 }

@@ -19,7 +19,6 @@ class UserPersonalController {
   }
 
   Future<void> editPersonalData({
-    required String id,
     required PersonalModel personalModel,
   }) async {
     await _datasource.editData(personalModel: personalModel);

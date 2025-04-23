@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:top_jobs/model/users/education_model.dart';
 
 class EducationDioganalWidget extends StatefulWidget {
   const EducationDioganalWidget({super.key});
+  //final EducationModel? educationModel;
+  
 
   @override
   State<EducationDioganalWidget> createState() => _EducationDioganalWidget();

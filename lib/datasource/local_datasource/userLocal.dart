@@ -22,7 +22,7 @@ class Userlocal {
     final prefens = await SharedPreferences.getInstance();
     prefens.setString(
       "user",
-      jsonEncode(signModel.toJson()),
+      jsonEncode(signModel.toJsonForlocale()),
     );
   }
 

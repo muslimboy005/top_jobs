@@ -27,4 +27,11 @@ class SignModel {
     "contact": contact,
     "password": password,
   };
+   Map<String, dynamic> toJsonForlocale() => {
+    "id":id,
+    "contact": contact,
+    "password": password,
+  };
+
 }
+

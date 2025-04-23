@@ -277,7 +277,7 @@ class _SigupUserScreenState extends State<SigupUserScreen> {
                                           _registerPasswordController
                                               .text,
                                     );
-                                Userlocal().setData(
+                                await Userlocal().setData(
                                   signModel: SignModel(
                                     id: id,
                                     contact:
@@ -288,6 +288,7 @@ class _SigupUserScreenState extends State<SigupUserScreen> {
                                             .text,
                                   ),
                                 );
+
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

@@ -1,13 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
+import 'package:top_jobs/view/widget/language_dialog_widget.dart';
 import 'package:top_jobs/view/widget/profile_dialog_widget.dart';
 
-class FilUserProfileScreen extends StatelessWidget {
-  const FilUserProfileScreen({Key? key}) : super(key: key);
+class FilUserProfileScreen extends StatefulWidget {
+  const FilUserProfileScreen({super.key});
 
-  void _showInfoDialog(BuildContext context) {
-    showDialog(
+  @override
+  State<FilUserProfileScreen> createState() =>
+      _FilUserProfileScreenState();
+}
+
+class _FilUserProfileScreenState
+    extends State<FilUserProfileScreen> {
+  List<Widget> diologs = [];
+  late String id;
+  @override
+  void initState() {
+    Userlocal().getData().then((value) {
+      id = value!.id;
+      diologs = [
+        ProfileDialogWidget(id: id, isFirst: true),
+        LanguageDialogWidget(id: id, isFirst: true),
+      ];
+    });
+    super.initState();
+  }
+
+  void _showInfoDialog(BuildContext context) async {
+    await showDialog(
       context: context,
-      builder: (context) => ProfileDialogWidget(),
+      builder: (context) {
+        return diologs[0];
+      },
+    );
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return diologs[1];
+      },
     );
   }
 

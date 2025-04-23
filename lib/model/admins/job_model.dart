@@ -2,6 +2,7 @@ class JobModel {
   final String companyId;
   final String id;
   final String jobInfo;
+  final List<String> applied;
   final Map<String, dynamic> comment;
   final String companyImage;
   final Map<String, dynamic> grade;
@@ -12,6 +13,7 @@ class JobModel {
   final DateTime time;
 
   JobModel({
+    this.applied = const [],
     required this.jobInfo,
     this.companyId = "0",
     this.id = "0",
@@ -37,6 +39,7 @@ class JobModel {
     jobInfo: jobInfo ?? this.jobInfo,
     companyId: companyId,
     id: id,
+    applied: applied,
     comment: comment,
     companyImage: companyImage ?? this.companyImage,
     grade: grade,
@@ -50,6 +53,7 @@ class JobModel {
   factory JobModel.fromJson(Map<String, dynamic> json) {
     print(json);
     return JobModel(
+      applied: json["applied"],
       jobInfo: json["jobInfo"],
       companyId: json["companyId"] ?? "0",
       id: json["id"],

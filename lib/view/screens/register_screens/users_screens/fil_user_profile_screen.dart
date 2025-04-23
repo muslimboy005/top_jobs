@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:top_jobs/view/widget/profile_dialog_widget.dart';
 
 class FilUserProfileScreen extends StatelessWidget {
   const FilUserProfileScreen({Key? key}) : super(key: key);
@@ -6,19 +7,7 @@ class FilUserProfileScreen extends StatelessWidget {
   void _showInfoDialog(BuildContext context) {
     showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text("Ma'lumot"),
-            content: const Text(
-              "Shaxsiy ma'lumotlarni to'ldirish uchun davom eting.",
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Yopish"),
-              ),
-            ],
-          ),
+      builder: (context) => ProfileDialogWidget(),
     );
   }
 

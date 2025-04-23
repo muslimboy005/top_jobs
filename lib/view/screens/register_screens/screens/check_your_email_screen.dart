@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:top_jobs/controller/admin_controller/admin_register_controller.dart';
+import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
+import 'package:top_jobs/model/sign_model.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/forgot_password_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/login_screen.dart';
-import 'package:top_jobs/view/screens/register_screens/users_screens/successfully_user_screen.dart';
+import 'package:top_jobs/view/screens/register_screens/screens/successfully_screen.dart';
 
 class CheckYourEmailScreen extends StatefulWidget {
   final String email;
+  final String id;
+
   final bool isAdmin;
   const CheckYourEmailScreen({
     super.key,
     this.email = "",
     this.isAdmin = false,
+    required this.id,
   });
 
   @override
@@ -50,10 +55,17 @@ class _CheckYourEmailScreenState
             email: widget.email,
             password: _registerPasswordController.text,
           );
+      Userlocal().setData(
+        signModel: SignModel(
+          id: widget.id,
+          contact: widget.email,
+          password: _registerPasswordController.text,
+        ),
+      );
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(
-          builder: (context) => SuccessfullyScreen(),
+          builder: (context) => SuccessfullyScreen(isAdmin: widget.isAdmin),
         ),
       );
     }

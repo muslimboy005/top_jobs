@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_jobs/controller/admin_controller/admin_register_controller.dart';
+import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
 import 'package:top_jobs/model/sign_model.dart';
@@ -55,7 +56,6 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         allUsers = users;
         allAdmins = admins;
-        print(allAdmins);
         isLoading = false;
       });
     } catch (e) {
@@ -111,6 +111,7 @@ class _LoginScreenState extends State<LoginScreen> {
             user.password ==
                 _registerPasswordController.text) {
           foundUser = true;
+          Userlocal().setData(signModel: user);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
@@ -125,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
             user.password ==
                 _registerPasswordController.text) {
           foundUser = true;
+          Userlocal().setData(signModel: user);
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:top_jobs/controller/admin_controller/admin_register_controller.dart';
 import 'package:top_jobs/controller/all_users_and_admins/all_users_and_admins_controller.dart';
+import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
+import 'package:top_jobs/model/sign_model.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 import 'package:top_jobs/view/screens/register_screens/admin_screens/fill_admin_profile_screen.dart';
@@ -266,7 +268,7 @@ class _SigupUserScreenState
                             onTap: () async {
                               if (formKey.currentState!
                                   .validate()) {
-                                widget
+                                final id = await widget
                                     .adminRegisterController
                                     .saveRegisterData(
                                       email:
@@ -276,16 +278,17 @@ class _SigupUserScreenState
                                           _registerPasswordController
                                               .text,
                                     );
-                                await widget
-                                    .adminRegisterController
-                                    .saveRegisterData(
-                                      email:
-                                          _registerEmailController
-                                              .text,
-                                      password:
-                                          _registerPasswordController
-                                              .text,
-                                    );
+                                Userlocal().setData(
+                                  signModel: SignModel(
+                                    id: id,
+                                    contact:
+                                        _registerEmailController
+                                            .text,
+                                    password:
+                                        _registerPasswordController
+                                            .text,
+                                  ),
+                                );
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(

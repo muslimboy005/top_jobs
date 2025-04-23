@@ -112,6 +112,7 @@ class _ForgotPasswordScreenState
             MaterialPageRoute(
               builder:
                   (context) => CheckYourEmailScreen(
+                    id: user.id,
                     email: _registerEmailController.text,
                   ),
             ),
@@ -127,6 +128,7 @@ class _ForgotPasswordScreenState
             MaterialPageRoute(
               builder:
                   (context) => CheckYourEmailScreen(
+                    id: user.id,
                     isAdmin: true,
                     email: _registerEmailController.text,
                   ),

@@ -28,7 +28,10 @@ class UserEducationDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/education.json",
     );
-    await http.post(url, body: educationName.toJson());
+    await http.post(
+      url,
+      body: jsonEncode(educationName.toJson()),
+    );
   }
 
   Future<void> editData({
@@ -38,9 +41,11 @@ class UserEducationDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/education/$id.json",
     );
-    await http.put(url, body: educationName.toJson());
+    await http.put(
+      url,
+      body: jsonEncode(educationName.toJson()),
+    );
   }
-
 
   Future<void> delete({required String id}) async {
     final url = Uri.parse(

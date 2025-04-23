@@ -22,9 +22,11 @@ class UserSkillDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/skill.json",
     );
-    await http.patch(
+    print(skillsModel.toJson());
+    print(jsonEncode(skillsModel.toJson()));
+    await http.put(
       url,
-      body: jsonEncode({skillsModel.toJson()}),
+      body: jsonEncode(skillsModel.toJson()),
     );
   }
 
@@ -34,6 +36,9 @@ class UserSkillDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/skill.json",
     );
-    await http.put(url, body: skillsModel.toJson());
+    await http.put(
+      url,
+      body: jsonEncode(skillsModel.toJson()),
+    );
   }
 }

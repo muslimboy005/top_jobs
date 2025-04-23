@@ -9,7 +9,7 @@ import 'package:top_jobs/view/screens/mian_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/user_or_admin.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/forgot_password_screen.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
-import 'package:top_jobs/view/screens/search_screen.dart';
+import 'package:top_jobs/view/screens/user_profile/user_main_page.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -115,7 +115,7 @@ class _LoginScreenState extends State<LoginScreen> {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (context) => SearchScreen(),
+              builder: (context) => UserMainPage(),
             ),
           );
           break;

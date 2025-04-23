@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
+import 'package:top_jobs/view/screens/user_profile/user_main_page.dart';
 import 'package:top_jobs/view/widget/education_dioganal_widget.dart';
 import 'package:top_jobs/view/widget/experience_dialog_widget.dart';
 import 'package:top_jobs/view/widget/language_dialog_widget.dart';
@@ -43,6 +44,14 @@ class _FilUserProfileScreenState
         },
       );
     }
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) {
+          return UserMainPage();
+        },
+      ),
+    );
   }
 
   @override

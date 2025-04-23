@@ -28,7 +28,10 @@ class UserLanguageDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/language.json",
     );
-    await http.post(url, body: languageModel.toJson());
+    await http.post(
+      url,
+      body: jsonEncode(languageModel.toJson()),
+    );
   }
 
   Future<void> editData({
@@ -38,9 +41,11 @@ class UserLanguageDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/language/$id.json",
     );
-    await http.put(url, body: languageModel.toJson());
+    await http.put(
+      url,
+      body: jsonEncode(languageModel.toJson()),
+    );
   }
-
 
   Future<void> delete({required String id}) async {
     final url = Uri.parse(

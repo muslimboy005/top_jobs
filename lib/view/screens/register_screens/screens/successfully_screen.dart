@@ -3,11 +3,14 @@ import 'package:flutter_svg/svg.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
 import 'package:top_jobs/view/screens/mian_screen.dart';
-import 'package:top_jobs/view/screens/search_screen.dart';
+import 'package:top_jobs/view/screens/user_profile/user_main_page.dart';
 
 class SuccessfullyScreen extends StatefulWidget {
   final bool isAdmin;
-  const SuccessfullyScreen({super.key,required this.isAdmin});
+  const SuccessfullyScreen({
+    super.key,
+    required this.isAdmin,
+  });
 
   @override
   State<SuccessfullyScreen> createState() =>
@@ -104,7 +107,9 @@ class _SuccessfullyScreenState
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return widget.isAdmin?MainScreen(): SearchScreen();
+                                return widget.isAdmin
+                                    ? MainScreen()
+                                    : UserMainPage();
                               },
                             ),
                           );

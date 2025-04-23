@@ -28,7 +28,10 @@ class UserExperianceDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/experience.json",
     );
-    await http.post(url, body: experienceModel.toJson());
+    await http.post(
+      url,
+      body: jsonEncode(experienceModel.toJson()),
+    );
   }
 
   Future<void> editData({
@@ -38,9 +41,11 @@ class UserExperianceDatasource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/experience/$id.json",
     );
-    await http.put(url, body: experienceModel.toJson());
+    await http.put(
+      url,
+      body: jsonEncode(experienceModel.toJson()),
+    );
   }
-
 
   Future<void> delete({required String id}) async {
     final url = Uri.parse(

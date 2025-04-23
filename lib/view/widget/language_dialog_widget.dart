@@ -95,7 +95,7 @@ class _LanguageDialogWidgetState
                         lanGrade: gradeCont.text,
                         lanName: languageCont.text,
                       );
-                      if (widget.isFirst && widget.isAdd) {
+                      if (widget.isFirst || widget.isAdd) {
                         UserLanguageController(
                           contact: widget.id,
                         ).saveLanguageData(

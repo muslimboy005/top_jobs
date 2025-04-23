@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
+import 'package:top_jobs/view/widget/education_dioganal_widget.dart';
+import 'package:top_jobs/view/widget/experience_dialog_widget.dart';
 import 'package:top_jobs/view/widget/language_dialog_widget.dart';
 import 'package:top_jobs/view/widget/profile_dialog_widget.dart';
+import 'package:top_jobs/view/widget/skill_dialog_widget.dart';
 
 class FilUserProfileScreen extends StatefulWidget {
   const FilUserProfileScreen({super.key});
@@ -22,24 +25,24 @@ class _FilUserProfileScreenState
       diologs = [
         ProfileDialogWidget(id: id, isFirst: true),
         LanguageDialogWidget(id: id, isFirst: true),
+        EducationDioganalWidget(id: id, isFirst: true),
+        ExperienceDialogWidget(id: id, isFirst: true),
+        SkillDialogWidget(id: id, isFirst: true),
       ];
     });
     super.initState();
   }
 
   void _showInfoDialog(BuildContext context) async {
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return diologs[0];
-      },
-    );
-    await showDialog(
-      context: context,
-      builder: (context) {
-        return diologs[1];
-      },
-    );
+    for (int i = 0; i < diologs.length; i++) {
+      await showDialog(
+        barrierDismissible: false,
+        context: context,
+        builder: (context) {
+          return diologs[i];
+        },
+      );
+    }
   }
 
   @override

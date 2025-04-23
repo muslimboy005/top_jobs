@@ -49,7 +49,7 @@ class _ExperienceDialogWidgetState
             .toList() ??
         ["", ""];
     startyearcont.text = date[0];
-    startyearcont.text = date[1];
+    stopyearcont.text = date[1];
   }
 
   @override

@@ -19,7 +19,6 @@ class UserSkillController {
   }
 
   Future<void> editSkillData({
-    required String id,
     required SkillsModel  skillsModel,
   }) async {
     await _datasource.editData(skillsModel: skillsModel);

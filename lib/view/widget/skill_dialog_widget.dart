@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:top_jobs/controller/user_controllers/user_skill_controller.dart';
+import 'package:top_jobs/model/users/skills_model.dart';
 
 class SkillDialogWidget extends StatefulWidget {
-  const SkillDialogWidget({super.key});
-
+  const SkillDialogWidget({
+    super.key,
+    this.skillsModel,
+    this.isFirst = false,
+    required this.id,
+  });
+  final SkillsModel? skillsModel;
+  final bool isFirst;
+  final String id;
   @override
   State<SkillDialogWidget> createState() =>
       _SkillDialogWidgetState();
@@ -11,6 +20,17 @@ class SkillDialogWidget extends StatefulWidget {
 class _SkillDialogWidgetState
     extends State<SkillDialogWidget> {
   final formKey = GlobalKey<FormState>();
+
+  final TextEditingController soft =
+      TextEditingController();
+  final TextEditingController hard =
+      TextEditingController();
+  @override
+  void initState() {
+    super.initState();
+    soft.text = widget.skillsModel?.softSkill ?? "";
+    hard.text = widget.skillsModel?.hardSkill ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +42,7 @@ class _SkillDialogWidgetState
           mainAxisSize: MainAxisSize.min,
           children: [
             TextFormField(
+              controller: hard,
               minLines: 3,
               maxLines: 3,
               decoration: InputDecoration(
@@ -39,6 +60,7 @@ class _SkillDialogWidgetState
             ),
             SizedBox(height: 10),
             TextFormField(
+              controller: soft,
               minLines: 3,
               maxLines: 3,
               decoration: InputDecoration(
@@ -69,6 +91,14 @@ class _SkillDialogWidgetState
                 TextButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
+                      final a = SkillsModel(hardSkill: hard.text, softSkill: soft.text);
+                      if(widget.isFirst){
+                        UserSkillController(contact: widget.id).saveSkillData(skillsModel: a);
+                      }
+                      else{
+                        UserSkillController(contact: widget.id).editSkillData(skillsModel: a);
+                        
+                      }
                       Navigator.pop(context);
                     }
                   },

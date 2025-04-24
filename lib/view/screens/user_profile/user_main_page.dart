@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:top_jobs/view/screens/screens/setting_screen.dart';
 import 'package:top_jobs/view/screens/user_profile/history.dart';
 import 'package:top_jobs/view/screens/user_profile/profile.dart';
 import 'package:top_jobs/view/screens/user_profile/search_screen.dart';
-import 'package:top_jobs/view/screens/user_profile/setting_screen.dart';
 
 class UserMainPage extends StatefulWidget {
   const UserMainPage({super.key});

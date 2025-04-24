@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_jobs/view/screens/admin_profile/admin_profile_screen.dart';
-import 'package:top_jobs/view/screens/user_profile/setting_screen.dart';
+import 'package:top_jobs/view/screens/screens/setting_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

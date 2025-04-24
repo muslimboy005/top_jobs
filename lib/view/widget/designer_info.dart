@@ -11,7 +11,7 @@ class DesignerInfo extends StatefulWidget {
   final String money;
   final String title2;
 
-  DesignerInfo({
+  const DesignerInfo({
     super.key,
     required this.date,
     required this.image,
@@ -27,7 +27,7 @@ class DesignerInfo extends StatefulWidget {
 }
 
 class _DesignerInfoState extends State<DesignerInfo> {
-  
+  bool isShow = false;
   @override
   Widget build(BuildContext context) {
     final double w = ScreenSize.widthFactor(context);
@@ -46,16 +46,31 @@ class _DesignerInfoState extends State<DesignerInfo> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
               children: [
                 CircleAvatar(
                   radius: 35,
-                  backgroundColor: Colors.black.withOpacity(0.1),
-                  child: Center(child: Image.network(widget.image,)),
+                  backgroundColor: Colors.white,
+                  child: ClipOval(
+                    child: Image.network(
+                      widget.image,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
                 IconButton(
-                  onPressed: () {},
-                  icon: Icon(Icons.bookmark_border, size: 30),
+                  onPressed: () {
+                    setState(() {
+                      isShow = !isShow;
+                    });
+                  },
+                  icon: Icon(
+                    isShow
+                        ? Icons.bookmark
+                        : Icons.bookmark_border,
+                    size: 30,
+                  ),
                 ),
               ],
             ),
@@ -66,26 +81,56 @@ class _DesignerInfoState extends State<DesignerInfo> {
               children: [
                 Text(
                   widget.title,
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
                 SizedBox(height: 5),
-                Text(widget.subTitle, style: TextStyle(fontSize: 16)),
+                Text(
+                  widget.subTitle,
+                  style: TextStyle(fontSize: 16),
+                ),
               ],
             ),
             Padding(
-              padding: const EdgeInsets.only(right: 20.0, top: 10, left: 20),
+              padding: const EdgeInsets.only(
+                right: 20.0,
+                top: 10,
+                left: 20,
+              ),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
                 children: [
-                  ContainersWidget(title: "  ${widget.title1}  "),
+                  ContainersWidget(
+                    title: "  ${widget.title1}  ",
+                  ),
                   ContainersWidget(title: widget.title2),
                 ],
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [Text(widget.date), Text(widget.money)],
+              mainAxisAlignment:
+                  MainAxisAlignment.spaceBetween,
+              children: [
+                Text(widget.date),
+                Row(
+                  children: [
+                    Text(widget.money),
+                    Text(
+                      "/Mo",
+                      style: TextStyle(
+                        color: Colors.black.withOpacity(
+                          0.5,
+                        ),
+                        fontSize: 18,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),

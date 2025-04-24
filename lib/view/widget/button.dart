@@ -8,11 +8,16 @@ import 'package:top_jobs/model/users/user_profile_model.dart';
 import 'package:top_jobs/view/widget/education_dioganal_widget.dart';
 import 'package:top_jobs/view/widget/experience_dialog_widget.dart';
 import 'package:top_jobs/view/widget/language_dialog_widget.dart';
-import 'package:top_jobs/view/widget/profile_dialog_widget.dart';
-import 'package:top_jobs/view/widget/skill_dialog_widget.dart';
+import 'package:http/http.dart' as http;
 
 class ButtonPage extends StatefulWidget {
-  const ButtonPage({super.key});
+  String userid;
+  String id;
+  ButtonPage({
+    super.key,
+    required this.id,
+    required this.userid,
+  });
 
   @override
   State<ButtonPage> createState() => _ButtonPageState();
@@ -33,7 +38,10 @@ class _ButtonPageState extends State<ButtonPage> {
     isload = true;
     final value = await Userlocal().getData();
     id = value!.id;
-    profileModel = await UserProfileController(contact: value.id).getdata();
+    profileModel =
+        await UserProfileController(
+          contact: value.id,
+        ).getdata();
 
     setState(() {
       isload = false;
@@ -57,7 +65,10 @@ class _ButtonPageState extends State<ButtonPage> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black12, width: 1),
+                    border: Border.all(
+                      color: Colors.black12,
+                      width: 1,
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -75,11 +86,16 @@ class _ButtonPageState extends State<ButtonPage> {
                         ),
                         child: Row(
                           children: [
-                            Icon(Icons.person_2_outlined, color: Colors.amber),
+                            Icon(
+                              Icons.person_2_outlined,
+                              color: Colors.amber,
+                            ),
                             SizedBox(width: 5),
                             Text(
                               "About me",
-                              style: TextStyle(fontWeight: FontWeight.bold),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                             Spacer(),
                           ],
@@ -89,12 +105,21 @@ class _ButtonPageState extends State<ButtonPage> {
                         Padding(
                           padding: EdgeInsets.all(20),
                           child: Column(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment:
+                                MainAxisAlignment
+                                    .spaceAround,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
                             children: [
-                              Image.network(profileModel.personalModel.image),
+                              Image.network(
+                                profileModel
+                                    .personalModel
+                                    .image,
+                              ),
                               Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                                crossAxisAlignment:
+                                    CrossAxisAlignment
+                                        .start,
                                 children: [
                                   Text(
                                     "Full name: ${profileModel.personalModel.firstName} ${profileModel.personalModel.secondName}",
@@ -124,7 +149,10 @@ class _ButtonPageState extends State<ButtonPage> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black12, width: 1),
+                    border: Border.all(
+                      color: Colors.black12,
+                      width: 1,
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -141,22 +169,33 @@ class _ButtonPageState extends State<ButtonPage> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.work_outline, color: Colors.amber),
+                                Icon(
+                                  Icons.work_outline,
+                                  color: Colors.amber,
+                                ),
                                 SizedBox(width: 5),
                                 Text(
                                   "Work experience",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight:
+                                        FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
                           ],
                         ),
                       ),
-                      if (press2 && profileModel.experienceModel.isNotEmpty)
+                      if (press2 &&
+                          profileModel
+                              .experienceModel
+                              .isNotEmpty)
                         Padding(
                           padding: EdgeInsets.all(20),
                           child: Column(
@@ -164,22 +203,30 @@ class _ButtonPageState extends State<ButtonPage> {
                             children: [
                               for (
                                 int i = 0;
-                                i < profileModel.experienceModel.length;
+                                i <
+                                    profileModel
+                                        .experienceModel
+                                        .length;
                                 i++
                               )
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment
+                                          .start,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment
+                                              .spaceBetween,
                                       children: [
                                         Text(
                                           profileModel
                                               .experienceModel[i]
                                               .position,
                                           style: TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight:
+                                                FontWeight
+                                                    .bold,
                                           ),
                                         ),
                                         Column(
@@ -187,17 +234,17 @@ class _ButtonPageState extends State<ButtonPage> {
                                             IconButton(
                                               onPressed: () async {
                                                 await showDialog(
-                                                  context: context,
-                                                  builder: (ctx) {
+                                                  context:
+                                                      context,
+                                                  builder: (
+                                                    ctx,
+                                                  ) {
                                                     return ExperienceDialogWidget(
                                                       id: id,
                                                       experienceModel:
-                                                          profileModel
-                                                              .experienceModel[i],
+                                                          profileModel.experienceModel[i],
                                                       expId:
-                                                          profileModel
-                                                              .experienceModel[i]
-                                                              .id,
+                                                          profileModel.experienceModel[i].id,
                                                     );
                                                   },
                                                 );
@@ -208,7 +255,9 @@ class _ButtonPageState extends State<ButtonPage> {
                                               },
                                               icon: Icon(
                                                 Icons.edit,
-                                                color: Colors.amber,
+                                                color:
+                                                    Colors
+                                                        .amber,
                                               ),
                                             ),
                                             if (profileModel
@@ -218,19 +267,21 @@ class _ButtonPageState extends State<ButtonPage> {
                                               IconButton(
                                                 onPressed: () async {
                                                   await UserExperienceController(
-                                                    contact: id,
+                                                    contact:
+                                                        id,
                                                   ).deleteExperienceData(
                                                     id:
-                                                        profileModel
-                                                            .experienceModel[i]
-                                                            .id,
+                                                        profileModel.experienceModel[i].id,
                                                   );
-                                                  setState(() {
-                                                    profileData();
-                                                  });
+                                                  setState(
+                                                    () {
+                                                      profileData();
+                                                    },
+                                                  );
                                                 },
                                                 icon: Icon(
-                                                  Icons.delete,
+                                                  Icons
+                                                      .delete,
                                                   size: 30,
                                                 ),
                                               ),
@@ -245,7 +296,9 @@ class _ButtonPageState extends State<ButtonPage> {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      profileModel.experienceModel[i].period,
+                                      profileModel
+                                          .experienceModel[i]
+                                          .period,
                                     ),
                                     SizedBox(height: 5),
                                     Text(
@@ -268,7 +321,10 @@ class _ButtonPageState extends State<ButtonPage> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black12, width: 1),
+                    border: Border.all(
+                      color: Colors.black12,
+                      width: 1,
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -285,42 +341,63 @@ class _ButtonPageState extends State<ButtonPage> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.school, color: Colors.amber),
+                                Icon(
+                                  Icons.school,
+                                  color: Colors.amber,
+                                ),
                                 SizedBox(width: 5),
                                 Text(
                                   "Education",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight:
+                                        FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
                           ],
                         ),
                       ),
-                      if (press3 && profileModel.educationModel.isNotEmpty)
+                      if (press3 &&
+                          profileModel
+                              .educationModel
+                              .isNotEmpty)
                         Padding(
                           padding: EdgeInsets.all(20),
                           child: Column(
                             children: [
                               for (
                                 int i = 0;
-                                i < profileModel.educationModel.length;
+                                i <
+                                    profileModel
+                                        .educationModel
+                                        .length;
                                 i++
                               )
                                 Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  crossAxisAlignment:
+                                      CrossAxisAlignment
+                                          .start,
                                   children: [
                                     Row(
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment
+                                              .spaceBetween,
                                       children: [
                                         Text(
-                                          profileModel.educationModel[i].degree,
+                                          profileModel
+                                              .educationModel[i]
+                                              .degree,
                                           style: TextStyle(
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight:
+                                                FontWeight
+                                                    .bold,
                                           ),
                                         ),
                                         Column(
@@ -328,17 +405,17 @@ class _ButtonPageState extends State<ButtonPage> {
                                             IconButton(
                                               onPressed: () async {
                                                 await showDialog(
-                                                  context: context,
-                                                  builder: (ctx) {
+                                                  context:
+                                                      context,
+                                                  builder: (
+                                                    ctx,
+                                                  ) {
                                                     return EducationDioganalWidget(
                                                       id: id,
                                                       eduId:
-                                                          profileModel
-                                                              .educationModel[i]
-                                                              .id,
+                                                          profileModel.educationModel[i].id,
                                                       educationModel:
-                                                          profileModel
-                                                              .educationModel[i],
+                                                          profileModel.educationModel[i],
                                                     );
                                                   },
                                                 );
@@ -348,7 +425,9 @@ class _ButtonPageState extends State<ButtonPage> {
                                               },
                                               icon: Icon(
                                                 Icons.edit,
-                                                color: Colors.amber,
+                                                color:
+                                                    Colors
+                                                        .amber,
                                               ),
                                             ),
                                             if (profileModel
@@ -358,18 +437,22 @@ class _ButtonPageState extends State<ButtonPage> {
                                               IconButton(
                                                 onPressed: () async {
                                                   await UserEducationController(
-                                                    contact: id,
+                                                    contact:
+                                                        id,
                                                   ).deleteEducationData(
                                                     id:
-                                                        profileModel
-                                                            .educationModel[i]
-                                                            .id,
+                                                        profileModel.educationModel[i].id,
                                                   );
-                                                  setState(() {
-                                                    profileData();
-                                                  });
+                                                  setState(
+                                                    () {
+                                                      profileData();
+                                                    },
+                                                  );
                                                 },
-                                                icon: Icon(Icons.delete),
+                                                icon: Icon(
+                                                  Icons
+                                                      .delete,
+                                                ),
                                               ),
                                           ],
                                         ),
@@ -382,7 +465,9 @@ class _ButtonPageState extends State<ButtonPage> {
                                     ),
                                     SizedBox(height: 5),
                                     Text(
-                                      profileModel.educationModel[0].duration,
+                                      profileModel
+                                          .educationModel[0]
+                                          .duration,
                                     ),
                                   ],
                                 ),
@@ -397,7 +482,10 @@ class _ButtonPageState extends State<ButtonPage> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black12, width: 1),
+                    border: Border.all(
+                      color: Colors.black12,
+                      width: 1,
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -414,15 +502,23 @@ class _ButtonPageState extends State<ButtonPage> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.webhook_sharp, color: Colors.amber),
+                                Icon(
+                                  Icons.webhook_sharp,
+                                  color: Colors.amber,
+                                ),
                                 SizedBox(width: 5),
                                 Text(
                                   "Skill",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight:
+                                        FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
@@ -438,7 +534,8 @@ class _ButtonPageState extends State<ButtonPage> {
                             bottom: 20,
                           ),
                           child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            crossAxisAlignment:
+                                CrossAxisAlignment.start,
                             children: [
                               Text(
                                 "Hard skill: ${profileModel.skillsModel.hardSkill}\n\n",
@@ -457,7 +554,10 @@ class _ButtonPageState extends State<ButtonPage> {
                 Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(20),
-                    border: Border.all(color: Colors.black12, width: 1),
+                    border: Border.all(
+                      color: Colors.black12,
+                      width: 1,
+                    ),
                   ),
                   child: Column(
                     children: [
@@ -474,22 +574,33 @@ class _ButtonPageState extends State<ButtonPage> {
                           ),
                         ),
                         child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisAlignment:
+                              MainAxisAlignment
+                                  .spaceBetween,
                           children: [
                             Row(
                               children: [
-                                Icon(Icons.stars_outlined, color: Colors.amber),
+                                Icon(
+                                  Icons.stars_outlined,
+                                  color: Colors.amber,
+                                ),
                                 SizedBox(width: 5),
                                 Text(
                                   "Language",
-                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  style: TextStyle(
+                                    fontWeight:
+                                        FontWeight.bold,
+                                  ),
                                 ),
                               ],
                             ),
                           ],
                         ),
                       ),
-                      if (press5 && profileModel.languageModel.isNotEmpty)
+                      if (press5 &&
+                          profileModel
+                              .languageModel
+                              .isNotEmpty)
                         Padding(
                           padding: EdgeInsets.only(
                             top: 20,
@@ -501,16 +612,21 @@ class _ButtonPageState extends State<ButtonPage> {
                             children: [
                               for (
                                 int i = 0;
-                                i < profileModel.languageModel.length;
+                                i <
+                                    profileModel
+                                        .languageModel
+                                        .length;
                                 i++
                               )
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment
+                                          .spaceBetween,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment
+                                              .start,
                                       children: [
                                         Text(
                                           "Name: ${profileModel.languageModel[0].lanName}",
@@ -525,8 +641,11 @@ class _ButtonPageState extends State<ButtonPage> {
                                         IconButton(
                                           onPressed: () async {
                                             await showDialog(
-                                              context: context,
-                                              builder: (ctx) {
+                                              context:
+                                                  context,
+                                              builder: (
+                                                ctx,
+                                              ) {
                                                 return LanguageDialogWidget(
                                                   id: id,
                                                   langId:
@@ -545,10 +664,14 @@ class _ButtonPageState extends State<ButtonPage> {
                                           },
                                           icon: Icon(
                                             Icons.edit,
-                                            color: Colors.amber,
+                                            color:
+                                                Colors
+                                                    .amber,
                                           ),
                                         ),
-                                        if (profileModel.languageModel.length >
+                                        if (profileModel
+                                                .languageModel
+                                                .length >
                                             1)
                                           IconButton(
                                             onPressed: () async {
@@ -564,7 +687,9 @@ class _ButtonPageState extends State<ButtonPage> {
                                                 profileData();
                                               });
                                             },
-                                            icon: Icon(Icons.delete),
+                                            icon: Icon(
+                                              Icons.delete,
+                                            ),
                                           ),
                                       ],
                                     ),
@@ -577,9 +702,31 @@ class _ButtonPageState extends State<ButtonPage> {
                   ),
                 ),
                 SizedBox(height: 10),
-                ElevatedButton(onPressed: (){}, child: Text("Qabul qilish",style: TextStyle(color: Colors.green),)),
-                SizedBox(height: 10,),
-                ElevatedButton(onPressed: () {}, child: Text("Rad etish", style: TextStyle(color: Colors.red),))
+                ElevatedButton(
+                  onPressed: () {
+                    final uri = Uri.parse(
+                      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/${widget.userid}/profile/history/${widget.id}/process.json",
+                    );
+                    http.put(uri, body: "qabul qilindi");
+                  },
+                  child: Text(
+                    "Qabul qilish",
+                    style: TextStyle(color: Colors.green),
+                  ),
+                ),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () async {
+                    final uri = Uri.parse(
+                      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/${widget.userid}/profile/history/${widget.id}/process.json",
+                    );
+                    http.put(uri, body: "rad etildi");
+                  },
+                  child: Text(
+                    "Rad etish",
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ),
               ],
             ),
             actions: [

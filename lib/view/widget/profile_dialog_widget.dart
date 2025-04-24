@@ -240,9 +240,12 @@ class _ProfileDialogWidget
                     MainAxisAlignment.spaceBetween,
                 children: [
                   TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
+                    onPressed:
+                        widget.isFirst
+                            ? null
+                            : () {
+                              Navigator.pop(context);
+                            },
                     child: Text("Cancel"),
                   ),
                   TextButton(

@@ -171,9 +171,12 @@ class _ExperienceDialogWidgetState
                   MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed:
+                      widget.isFirst
+                          ? null
+                          : () {
+                            Navigator.pop(context);
+                          },
                   child: Text("Cancel"),
                 ),
 
@@ -181,6 +184,7 @@ class _ExperienceDialogWidgetState
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       final a = ExperienceModel(
+                        id: widget.expId,
                         companyName: compNameCont.text,
                         period:
                             "${startyearcont.text}-${stopyearcont.text}",

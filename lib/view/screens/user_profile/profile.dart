@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:top_jobs/controller/user_controllers/user_edu_controller.dart';
+import 'package:top_jobs/controller/user_controllers/user_experience_controller.dart';
+import 'package:top_jobs/controller/user_controllers/user_language_controller.dart';
 import 'package:top_jobs/controller/user_controllers/user_profile_controller.dart';
 import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
 import 'package:top_jobs/model/users/user_profile_model.dart';
@@ -25,18 +28,20 @@ class _ProfilePageState extends State<ProfilePage> {
   bool press6 = false;
   bool isload = false;
 
-  final controller = UserProfileController(
-    contact: "user1",
-  );
   late UserProfileModel profileModel;
   late String id;
   Future<void> profileData() async {
     isload = true;
-    profileModel = await controller.getdata();
-    final userData = await Userlocal().getData();
-    userData != null ? id = userData.id : "18";
-    isload = false;
-    setState(() {});
+    final value = await Userlocal().getData();
+    id = value!.id;
+    profileModel =
+        await UserProfileController(
+          contact: value.id,
+        ).getdata();
+
+    setState(() {
+      isload = false;
+    });
   }
 
   @override
@@ -73,7 +78,22 @@ class _ProfilePageState extends State<ProfilePage> {
                                 MainAxisAlignment.end,
                             children: [
                               IconButton(
-                                onPressed: () {},
+                                onPressed: () async {
+                                  await showDialog(
+                                    context: context,
+                                    builder: (ctx) {
+                                      return ProfileDialogWidget(
+                                        id: id,
+                                        personalModel:
+                                            profileModel
+                                                .personalModel,
+                                      );
+                                    },
+                                  );
+                                  setState(() {
+                                    profileData();
+                                  });
+                                },
                                 icon: Icon(Icons.edit),
                               ),
                               IconButton(
@@ -158,17 +178,21 @@ class _ProfilePageState extends State<ProfilePage> {
                                 ),
                                 Spacer(),
                                 IconButton(
-                                  onPressed: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder:
-                                            (context) =>
-                                                ProfileDialogWidget(
-                                                  id: id,
-                                                ),
-                                      ),
+                                  onPressed: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (ctx) {
+                                        return ProfileDialogWidget(
+                                          id: id,
+                                          personalModel:
+                                              profileModel
+                                                  .personalModel,
+                                        );
+                                      },
                                     );
+                                    setState(() {
+                                      profileData();
+                                    });
                                   },
                                   icon: Icon(
                                     Icons.edit,
@@ -249,17 +273,44 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.work_outline,
-                                  color: Colors.amber,
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.work_outline,
+                                      color: Colors.amber,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "Work experience",
+                                      style: TextStyle(
+                                        fontWeight:
+                                            FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 5),
-                                Text(
-                                  "Work experience",
-                                  style: TextStyle(
-                                    fontWeight:
-                                        FontWeight.bold,
+                                IconButton(
+                                  onPressed: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (ctx) {
+                                        return ExperienceDialogWidget(
+                                          id: id,
+                                          isAdd: true,
+                                        );
+                                      },
+                                    );
+                                    setState(() {
+                                      profileData();
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.add,
+                                    size: 30,
                                   ),
                                 ),
                               ],
@@ -272,62 +323,123 @@ class _ProfilePageState extends State<ProfilePage> {
                             Padding(
                               padding: EdgeInsets.all(20),
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment
-                                        .start,
+                                spacing: 20,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceBetween,
-                                    children: [
-                                      Text(
+                                  for (
+                                    int i = 0;
+                                    i <
                                         profileModel
-                                            .experienceModel[0]
-                                            .position,
-                                        style: TextStyle(
-                                          fontWeight:
-                                              FontWeight
-                                                  .bold,
+                                            .experienceModel
+                                            .length;
+                                    i++
+                                  )
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                          children: [
+                                            Text(
+                                              profileModel
+                                                  .experienceModel[i]
+                                                  .position,
+                                              style: TextStyle(
+                                                fontWeight:
+                                                    FontWeight
+                                                        .bold,
+                                              ),
+                                            ),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    await showDialog(
+                                                      context:
+                                                          context,
+                                                      builder: (
+                                                        ctx,
+                                                      ) {
+                                                        return ExperienceDialogWidget(
+                                                          id:
+                                                              id,
+                                                          experienceModel:
+                                                              profileModel.experienceModel[i],
+                                                          expId:
+                                                              profileModel.experienceModel[i].id,
+                                                        );
+                                                      },
+                                                    );
+
+                                                    setState(
+                                                      () {
+                                                        profileData();
+                                                      },
+                                                    );
+                                                  },
+                                                  icon: Icon(
+                                                    Icons
+                                                        .edit,
+                                                    color:
+                                                        Colors.amber,
+                                                  ),
+                                                ),
+                                                if (profileModel
+                                                        .experienceModel
+                                                        .length >
+                                                    1)
+                                                  IconButton(
+                                                    onPressed: () async {
+                                                      await UserExperienceController(
+                                                        contact:
+                                                            id,
+                                                      ).deleteExperienceData(
+                                                        id:
+                                                            profileModel.experienceModel[i].id,
+                                                      );
+                                                      setState(
+                                                        () {
+                                                          profileData();
+                                                        },
+                                                      );
+                                                    },
+                                                    icon: Icon(
+                                                      Icons
+                                                          .delete,
+                                                      size:
+                                                          30,
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          showDialog(
-                                            context:
-                                                context,
-                                            builder: (ctx) {
-                                              return ExperienceDialogWidget(
-                                                id: id,
-                                              );
-                                            },
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color:
-                                              Colors.amber,
+                                        Text(
+                                          profileModel
+                                              .experienceModel[i]
+                                              .companyName,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    profileModel
-                                        .experienceModel[0]
-                                        .companyName,
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    profileModel
-                                        .experienceModel[0]
-                                        .period,
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    profileModel
-                                        .experienceModel[0]
-                                        .responsibility,
-                                  ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          profileModel
+                                              .experienceModel[i]
+                                              .period,
+                                        ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          profileModel
+                                              .experienceModel[i]
+                                              .responsibility,
+                                        ),
+                                        SizedBox(
+                                          height: 20,
+                                        ),
+                                        Divider(),
+                                      ],
+                                    ),
                                 ],
                               ),
                             ),
@@ -361,17 +473,44 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.school,
-                                  color: Colors.amber,
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.school,
+                                      color: Colors.amber,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "Education",
+                                      style: TextStyle(
+                                        fontWeight:
+                                            FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(width: 5),
-                                Text(
-                                  "Education",
-                                  style: TextStyle(
-                                    fontWeight:
-                                        FontWeight.bold,
+                                IconButton(
+                                  onPressed: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (ctx) {
+                                        return EducationDioganalWidget(
+                                          id: id,
+                                          isAdd: true,
+                                        );
+                                      },
+                                    );
+                                    setState(() {
+                                      profileData();
+                                    });
+                                  },
+                                  icon: Icon(
+                                    Icons.add,
+                                    size: 30,
                                   ),
                                 ),
                               ],
@@ -384,56 +523,109 @@ class _ProfilePageState extends State<ProfilePage> {
                             Padding(
                               padding: EdgeInsets.all(20),
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment
-                                        .start,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment
-                                            .spaceBetween,
-                                    children: [
-                                      Text(
+                                  for (
+                                    int i = 0;
+                                    i <
                                         profileModel
-                                            .educationModel[0]
-                                            .degree,
-                                        style: TextStyle(
-                                          fontWeight:
-                                              FontWeight
-                                                  .bold,
+                                            .educationModel
+                                            .length;
+                                    i++
+                                  )
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment
+                                              .start,
+                                      children: [
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment
+                                                  .spaceBetween,
+                                          children: [
+                                            Text(
+                                              profileModel
+                                                  .educationModel[i]
+                                                  .degree,
+                                              style: TextStyle(
+                                                fontWeight:
+                                                    FontWeight
+                                                        .bold,
+                                              ),
+                                            ),
+                                            Column(
+                                              children: [
+                                                IconButton(
+                                                  onPressed: () async {
+                                                    await showDialog(
+                                                      context:
+                                                          context,
+                                                      builder: (
+                                                        ctx,
+                                                      ) {
+                                                        return EducationDioganalWidget(
+                                                          id:
+                                                              id,
+                                                          eduId:
+                                                              profileModel.educationModel[i].id,
+                                                          educationModel:
+                                                              profileModel.educationModel[i],
+                                                        );
+                                                      },
+                                                    );
+                                                    setState(
+                                                      () {
+                                                        profileData();
+                                                      },
+                                                    );
+                                                  },
+                                                  icon: Icon(
+                                                    Icons
+                                                        .edit,
+                                                    color:
+                                                        Colors.amber,
+                                                  ),
+                                                ),
+                                                if (profileModel
+                                                        .educationModel
+                                                        .length >
+                                                    1)
+                                                  IconButton(
+                                                    onPressed: () async {
+                                                      await UserEducationController(
+                                                        contact:
+                                                            id,
+                                                      ).deleteEducationData(
+                                                        id:
+                                                            profileModel.educationModel[i].id,
+                                                      );
+                                                      setState(
+                                                        () {
+                                                          profileData();
+                                                        },
+                                                      );
+                                                    },
+                                                    icon: Icon(
+                                                      Icons
+                                                          .delete,
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      IconButton(
-                                        onPressed: () {
-                                          showDialog(
-                                            context:
-                                                context,
-                                            builder: (ctx) {
-                                              return EducationDioganalWidget(
-                                                id: id,
-                                              );
-                                            },
-                                          );
-                                        },
-                                        icon: Icon(
-                                          Icons.edit,
-                                          color:
-                                              Colors.amber,
+                                        Text(
+                                          profileModel
+                                              .educationModel[0]
+                                              .educationName,
                                         ),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    profileModel
-                                        .educationModel[0]
-                                        .educationName,
-                                  ),
-                                  SizedBox(height: 5),
-                                  Text(
-                                    profileModel
-                                        .educationModel[0]
-                                        .duration,
-                                  ),
+                                        SizedBox(height: 5),
+                                        Text(
+                                          profileModel
+                                              .educationModel[0]
+                                              .duration,
+                                        ),
+                                      ],
+                                    ),
                                 ],
                               ),
                             ),
@@ -467,29 +659,42 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.webhook_sharp,
-                                  color: Colors.amber,
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  "Skill",
-                                  style: TextStyle(
-                                    fontWeight:
-                                        FontWeight.bold,
-                                  ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.webhook_sharp,
+                                      color: Colors.amber,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "Skill",
+                                      style: TextStyle(
+                                        fontWeight:
+                                            FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 IconButton(
-                                  onPressed: () {
-                                    showDialog(
+                                  onPressed: () async {
+                                    await showDialog(
                                       context: context,
                                       builder: (ctx) {
                                         return SkillDialogWidget(
                                           id: id,
+                                          skillsModel:
+                                              profileModel
+                                                  .skillsModel,
                                         );
                                       },
                                     );
+                                    setState(() {
+                                      profileData();
+                                    });
                                   },
                                   icon: Icon(
                                     Icons.edit,
@@ -503,6 +708,8 @@ class _ProfilePageState extends State<ProfilePage> {
                             Padding(
                               padding: EdgeInsets.only(
                                 top: 20,
+                                left: 15,
+                                right: 5,
                                 bottom: 20,
                               ),
                               child: Column(
@@ -511,7 +718,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         .start,
                                 children: [
                                   Text(
-                                    "Hard skill: ${profileModel.skillsModel.hardSkill}",
+                                    "Hard skill: ${profileModel.skillsModel.hardSkill}\n\n",
                                   ),
                                   Text(
                                     "Soft skill: ${profileModel.skillsModel.softSkill}",
@@ -549,18 +756,25 @@ class _ProfilePageState extends State<ProfilePage> {
                               ),
                             ),
                             child: Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment
+                                      .spaceBetween,
                               children: [
-                                Icon(
-                                  Icons.stars_outlined,
-                                  color: Colors.amber,
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  "Language",
-                                  style: TextStyle(
-                                    fontWeight:
-                                        FontWeight.bold,
-                                  ),
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Icons.stars_outlined,
+                                      color: Colors.amber,
+                                    ),
+                                    SizedBox(width: 5),
+                                    Text(
+                                      "Language",
+                                      style: TextStyle(
+                                        fontWeight:
+                                            FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 IconButton(
                                   onPressed: () {
@@ -569,13 +783,14 @@ class _ProfilePageState extends State<ProfilePage> {
                                       builder: (ctx) {
                                         return LanguageDialogWidget(
                                           id: id,
+                                          isAdd: true,
                                         );
                                       },
                                     );
                                   },
                                   icon: Icon(
-                                    Icons.edit,
-                                    color: Colors.amber,
+                                    Icons.add,
+                                    size: 30,
                                   ),
                                 ),
                               ],
@@ -588,19 +803,96 @@ class _ProfilePageState extends State<ProfilePage> {
                             Padding(
                               padding: EdgeInsets.only(
                                 top: 20,
+                                left: 15,
+                                right: 20,
                                 bottom: 20,
                               ),
                               child: Column(
-                                crossAxisAlignment:
-                                    CrossAxisAlignment
-                                        .start,
                                 children: [
-                                  Text(
-                                    "Name: ${profileModel.languageModel[0].lanName}",
-                                  ),
-                                  Text(
-                                    "Grade: ${profileModel.languageModel[0].lanGrade}",
-                                  ),
+                                  for (
+                                    int i = 0;
+                                    i <
+                                        profileModel
+                                            .languageModel
+                                            .length;
+                                    i++
+                                  )
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment
+                                              .spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment
+                                                  .start,
+                                          children: [
+                                            Text(
+                                              "Name: ${profileModel.languageModel[0].lanName}",
+                                            ),
+                                            Text(
+                                              "Grade: ${profileModel.languageModel[0].lanGrade}",
+                                            ),
+                                          ],
+                                        ),
+                                        Column(
+                                          children: [
+                                            IconButton(
+                                              onPressed: () async {
+                                                await showDialog(
+                                                  context:
+                                                      context,
+                                                  builder: (
+                                                    ctx,
+                                                  ) {
+                                                    return LanguageDialogWidget(
+                                                      id: id,
+                                                      langId:
+                                                          profileModel.languageModel[i].id,
+                                                      languageModel:
+                                                          profileModel.languageModel[i],
+                                                    );
+                                                  },
+                                                );
+                                                setState(() {
+                                                  profileData();
+                                                });
+                                              },
+                                              icon: Icon(
+                                                Icons.edit,
+                                                color:
+                                                    Colors
+                                                        .amber,
+                                              ),
+                                            ),
+                                            if (profileModel
+                                                    .languageModel
+                                                    .length >
+                                                1)
+                                              IconButton(
+                                                onPressed: () async {
+                                                  await UserLanguageController(
+                                                    contact:
+                                                        id,
+                                                  ).deleteLanguageData(
+                                                    id:
+                                                        profileModel.languageModel[i].id,
+                                                  );
+                                                  setState(
+                                                    () {
+                                                      profileData();
+                                                    },
+                                                  );
+                                                },
+                                                icon: Icon(
+                                                  Icons
+                                                      .delete,
+                                                ),
+                                              ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                 ],
                               ),
                             ),

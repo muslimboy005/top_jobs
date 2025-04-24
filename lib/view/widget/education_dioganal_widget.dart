@@ -178,7 +178,7 @@ class _EducationDioganalWidget
                   MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
+                  onPressed:widget.isFirst?null: () {
                     Navigator.pop(context);
                   },
                   child: Text("Bekor qilish"),
@@ -187,7 +187,9 @@ class _EducationDioganalWidget
                   onPressed: () {
                     if (forumKey.currentState!.validate()) {
                       final a = EducationModel(
+                        id: widget.eduId,
                         degree: _degreeController.text,
+                        
                         duration:
                             "${startyearcont.text}-${endyearcont.text}",
                         educationName: eduName.text,

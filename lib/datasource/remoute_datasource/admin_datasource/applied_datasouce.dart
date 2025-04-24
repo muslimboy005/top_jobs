@@ -19,13 +19,13 @@ class AppliedDatasouce {
     return jsonDecode(data.body);
   }
 
-  Future<void> setData({required String userId}) async {
+  Future<void> setData({required String userId, required String jobId}) async {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$companyId/jobs/$jobId/applied.json",
     );
     List all = await getData();
     all.add(userId);
-    all.toSet().toList();
+    all.toList();
     await http.put(url, body: jsonEncode(all));
   }
 }

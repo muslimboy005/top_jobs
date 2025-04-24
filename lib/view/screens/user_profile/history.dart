@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:top_jobs/controller/user_controllers/user_history_controller.dart';
+import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
 import 'package:top_jobs/model/users/history_model.dart';
 
 class HistoryPage extends StatefulWidget {
@@ -17,8 +18,12 @@ class _HistoryPageState extends State<HistoryPage> {
   @override
   void initState() {
     super.initState();
-    _controller = UserHistoryController(contact: 'user1');
-    loadHistory();
+    Userlocal().getData().then((value){
+      _controller = UserHistoryController(contact: value!.id);
+      loadHistory();
+    });
+    
+    
   }
 
   Future<void> loadHistory() async {

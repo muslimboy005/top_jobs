@@ -82,22 +82,30 @@ class _SkillDialogWidgetState
                   MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+                  onPressed:
+                      widget.isFirst
+                          ? null
+                          : () {
+                            Navigator.pop(context);
+                          },
                   child: Text("Cancel"),
                 ),
 
                 TextButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      final a = SkillsModel(hardSkill: hard.text, softSkill: soft.text);
-                      if(widget.isFirst){
-                        UserSkillController(contact: widget.id).saveSkillData(skillsModel: a);
-                      }
-                      else{
-                        UserSkillController(contact: widget.id).editSkillData(skillsModel: a);
-                        
+                      final a = SkillsModel(
+                        hardSkill: hard.text,
+                        softSkill: soft.text,
+                      );
+                      if (widget.isFirst) {
+                        UserSkillController(
+                          contact: widget.id,
+                        ).saveSkillData(skillsModel: a);
+                      } else {
+                        UserSkillController(
+                          contact: widget.id,
+                        ).editSkillData(skillsModel: a);
                       }
                       Navigator.pop(context);
                     }

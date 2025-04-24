@@ -4,8 +4,10 @@ class ExperienceModel {
     final String period;
     final String position;
     final String responsibility;
+    final String id;
 
     ExperienceModel({
+      required this.id,
         required this.companyName,
         required this.period,
         required this.position,
@@ -19,6 +21,7 @@ class ExperienceModel {
         String? responsibility,
     }) => 
         ExperienceModel(
+          id: id,
             companyName: companyName ?? this.companyName,
             period: period ?? this.period,
             position: position ?? this.position,
@@ -26,6 +29,7 @@ class ExperienceModel {
         );
 
     factory ExperienceModel.fromJson(Map<String, dynamic> json) => ExperienceModel(
+      id: json["id"],
         companyName: json["companyName"],
         period: json["period"],
         position: json["position"],

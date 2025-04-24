@@ -82,7 +82,7 @@ class _LanguageDialogWidgetState
                   MainAxisAlignment.spaceBetween,
               children: [
                 TextButton(
-                  onPressed: () {
+                  onPressed: widget.isFirst?null: () {
                     Navigator.pop(context);
                   },
                   child: Text("Cancel"),
@@ -92,6 +92,7 @@ class _LanguageDialogWidgetState
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       final a = LanguageModel(
+                        id: widget.langId,
                         lanGrade: gradeCont.text,
                         lanName: languageCont.text,
                       );

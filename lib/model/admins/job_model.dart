@@ -2,7 +2,7 @@ class JobModel {
   final String companyId;
   final String id;
   final String jobInfo;
-  final List<String> applied;
+  final List applied;
   final Map<String, dynamic> comment;
   final String companyImage;
   final Map<String, dynamic> grade;

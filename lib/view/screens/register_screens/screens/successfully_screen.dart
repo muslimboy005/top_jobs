@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
-import 'package:top_jobs/view/screens/mian_screen.dart';
+import 'package:top_jobs/view/screens/admin_profile/mian_screen.dart';
 import 'package:top_jobs/view/screens/user_profile/user_main_page.dart';
 
 class SuccessfullyScreen extends StatefulWidget {

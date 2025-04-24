@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_jobs/model/sign_model.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';
-import 'package:top_jobs/view/screens/mian_screen.dart';
+import 'package:top_jobs/view/screens/admin_profile/mian_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/login_screen.dart';
 import 'package:top_jobs/view/screens/user_profile/user_main_page.dart';
 

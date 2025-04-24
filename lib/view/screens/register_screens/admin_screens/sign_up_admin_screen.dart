@@ -294,7 +294,9 @@ class _SigupUserScreenState
                                   MaterialPageRoute(
                                     builder:
                                         (ctx) =>
-                                            FillAdminProfileScreen(),
+                                            FillAdminProfileScreen(
+                                              id: id,
+                                            ),
                                   ),
                                 );
                               }

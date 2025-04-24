@@ -327,6 +327,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           (
                                             ctx,
                                           ) => CompanyInfoWidgets(
+                                            jobId: job.id,
                                             companyId:
                                                 job.companyId,
 

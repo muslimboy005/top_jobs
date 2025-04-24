@@ -12,7 +12,7 @@ class ApliedConteroller {
   final data =await AppliedDatasouce(companyId: companyId, jobId: jobId).getData();
   return data;
   }
-  Future<void> setData({required String userId, required String jobId})async{
-   await AppliedDatasouce(companyId: companyId, jobId: jobId).setData(userId: userId,jobId: jobId);
+  Future<void> setData({required String userId, required String userJobId})async{
+   await AppliedDatasouce(companyId: companyId, jobId: jobId).setData(userId: userId,userJobId: userJobId);
   }
 }

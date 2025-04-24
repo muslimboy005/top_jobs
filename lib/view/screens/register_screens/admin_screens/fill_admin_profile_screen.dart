@@ -1,25 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:top_jobs/main.dart';
+import 'package:top_jobs/view/screens/admin_profile/mian_screen.dart';
+import 'package:top_jobs/view/widget/about_company_diolog.dart';
 
 class FillAdminProfileScreen extends StatelessWidget {
-  const FillAdminProfileScreen({Key? key})
+  final String id;
+  const FillAdminProfileScreen({Key? key, required this.id})
     : super(key: key);
 
-  void _showInfoDialog(BuildContext context) {
-    showDialog(
+  void _showInfoDialog(BuildContext context) async {
+    await showDialog(
       context: context,
-      builder:
-          (context) => AlertDialog(
-            title: const Text("Ma'lumot"),
-            content: const Text(
-              "Shaxsiy ma'lumotlarni to'ldirish uchun davom eting.",
-            ),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text("Yopish"),
-              ),
-            ],
-          ),
+      builder: (context) {
+        return AboutCompanyDiolog(id: id, isFirst: true);
+      },
+    );
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (ctx) {
+          return MainScreen();
+        },
+      ),
     );
   }
 

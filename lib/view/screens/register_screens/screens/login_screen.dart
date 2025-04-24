@@ -5,7 +5,7 @@ import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
 import 'package:top_jobs/utils/app_images.dart';
 import 'package:top_jobs/controller/user_controllers/user_register_controller.dart';
 import 'package:top_jobs/model/sign_model.dart';
-import 'package:top_jobs/view/screens/mian_screen.dart';
+import 'package:top_jobs/view/screens/admin_profile/mian_screen.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/user_or_admin.dart';
 import 'package:top_jobs/view/screens/register_screens/screens/forgot_password_screen.dart';
 import 'package:top_jobs/utils/screen_size_utils.dart';

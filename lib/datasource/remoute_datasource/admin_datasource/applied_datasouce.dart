@@ -12,19 +12,34 @@ class AppliedDatasouce {
   });
 
   Future<List> getData() async {
+    List all = [];
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$companyId/jobs/$jobId/applied.json",
     );
-    final data = await http.get(url);
-    return jsonDecode(data.body);
+    final url2 = Uri.parse(
+      "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$companyId/jobs/$jobId.json",
+    );
+    final data = await http.get(url2);
+    final decodeData = jsonDecode(data.body) as Map;
+    final keylar = decodeData.keys.toList();
+    if (keylar.contains("applied")) {
+      final data = await http.get(url);
+      all = jsonDecode(data.body);
+    }
+
+    return all;
   }
 
-  Future<void> setData({required String userId, required String jobId}) async {
+  Future<void> setData({
+    required String userId,
+    required String userJobId,
+  }) async {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$companyId/jobs/$jobId/applied.json",
     );
-    List all = await getData();
+    final all = await getData();
     all.add(userId);
+    all.add(userJobId);
     all.toList();
     await http.put(url, body: jsonEncode(all));
   }

@@ -12,10 +12,11 @@ class UserHistoryController {
     return data;
   }
 
-  Future<void> savehistoryData({
+  Future<String> savehistoryData({
     required HistoryModel historyModel,
   }) async {
-    await _datasource.setData(historyModel: historyModel);
+  final a =  await _datasource.setData(historyModel: historyModel);
+    return a;
   }
 
   Future<void> deleteHistoryData({required String id}) async {

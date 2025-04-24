@@ -19,7 +19,6 @@ class AdminAboutCompanyController {
   }
 
   Future<void> editAboutcompanyData({
-    required String id,
     required AboutCompanyModel aboutCompanyModel,
   }) async {
     await _datasource.editData(aboutCompanyModel: aboutCompanyModel);

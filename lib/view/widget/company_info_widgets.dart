@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:top_jobs/controller/admin_controller/about_company_controller.dart';
+import 'package:top_jobs/controller/admin_controller/aplied_conteroller.dart';
 import 'package:top_jobs/controller/user_controllers/user_history_controller.dart';
 import 'package:top_jobs/datasource/local_datasource/userLocal.dart';
 import 'package:top_jobs/model/admins/about_company_model.dart';
@@ -10,6 +11,7 @@ import 'package:top_jobs/utils/app_images.dart';
 
 class CompanyInfoWidgets extends StatefulWidget {
   final companyImage;
+  final String jobId;
   final String title1;
   final String title2;
   final String title3;
@@ -29,6 +31,7 @@ class CompanyInfoWidgets extends StatefulWidget {
     required this.title2,
     required this.title3,
     required this.conpanyLocation,
+    required this.jobId,
   });
 
   @override
@@ -54,6 +57,8 @@ class _CompanyInfoWidgetsState
         setState(() {});
       });
     });
+    print("company id ${widget.companyId}");
+    print("job id ${widget.jobId}");
 
     // buni togri olib kelish kerak!
 
@@ -312,7 +317,7 @@ class _CompanyInfoWidgetsState
             radius: double.infinity,
             focusColor: Colors.red,
             onTap: () async {
-              await UserHistoryController(
+              final userJobId = await UserHistoryController(
                 contact: id,
               ).savehistoryData(
                 historyModel: HistoryModel(
@@ -324,7 +329,11 @@ class _CompanyInfoWidgetsState
                   process: "jarayonda",
                 ),
               );
-                
+              await ApliedConteroller(
+                companyId: widget.companyId,
+                jobId: widget.jobId,
+              ).setData(userId: id, userJobId: userJobId);
+              Navigator.pop;
             },
             child: Ink(
               width: double.infinity,

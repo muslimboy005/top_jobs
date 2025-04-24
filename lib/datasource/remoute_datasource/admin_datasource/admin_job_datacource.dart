@@ -27,7 +27,10 @@ class AdminJobDatacource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$contact/jobs.json",
     );
-    await http.post(url, body: jobModel.toJson());
+    await http.post(
+      url,
+      body: jsonEncode(jobModel.toJson()),
+    );
   }
 
   Future<void> editData({
@@ -37,7 +40,10 @@ class AdminJobDatacource {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/admins/$contact/jobs/$id.json",
     );
-    await http.put(url, body: jobModel.toJson());
+    await http.put(
+      url,
+      body: jsonEncode(jobModel.toJson()),
+    );
   }
 
   Future<void> delete({required String id}) async {

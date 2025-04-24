@@ -22,13 +22,16 @@ class UserHistoryDatasource {
     return datas;
   }
 
-  Future<void> setData({
+  Future<String> setData({
     required HistoryModel historyModel,
   }) async {
     final url = Uri.parse(
       "https://topjobs-6fb40-default-rtdb.asia-southeast1.firebasedatabase.app/users/$contact/profile/history.json",
     );
-    await http.post(url, body: jsonEncode(historyModel.toJson()));
+   final response = await http.post(url, body: jsonEncode(historyModel.toJson()));
+   final responseData = json.decode(response.body);
+    final generatedId = responseData['name'];
+    return generatedId;
   }
 
   Future<void> delete({required String id}) async {
